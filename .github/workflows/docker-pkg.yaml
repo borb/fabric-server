@@ -43,7 +43,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: name/app,ghcr.io/name/app
+          images: ghcr.io/name/app
           tags: |
             type=schedule
             type=ref,event=branch
