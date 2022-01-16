@@ -39,3 +39,27 @@ use `docker attach` and speak directly to the commandline. ensure you use the co
 ## how do i import my world into this server? or adjust any files in the server data tree, such as server icon?
 
 create (or mount) the server data volume and use a scratch container to adjust the volume contents. place your `world` directory in the root of the container. this should contain your world data, e.g. `icon.png`, `level.dat`, `region`, `playerdata`, etc. - the fabric server container will fix up any permissions before startup, so don't worry about those.
+
+## i hate the versioning.
+
+yeah, i get it. sorry about that. for reference, version coding is as follows:
+
+```
+  v{{ epoch }}_mc{{ minecraft_server_version }}_fl{{ fabric_launcher_version }}_fi{{ fabric_installer_version }}.{{ iteration }}
+```
+
+each upstream version will be converted from semver into a value padded by leading zeroes to prevent alphabetical/numerical version confusion, with periods (`.`) converted into dashes (`-`). e.g.:
+
+semver version | rationalised version
+---------------|---------------------
+1.18           | 1-18-000
+1.18.1         | 1-18-001
+1.18.109       | 1-18-109
+1.20.0         | 1-20-000
+0.12.12        | 0-12-012
+
+as a result, for a first iteration container of minecraft 1.18.1 with fabric loader 0.12.12 and installer 0.10.2, this would read:
+
+> v0_mc1-18-001_fl0-12-012_fi0-10-002.0
+
+in the event that these numbers are insufficient and require reworking, the epoch will be incremented and the convention updated to reflect the "new reality".
