@@ -31,7 +31,7 @@ _java_args="${JAVA_ARGUMENTS:--Xms2G -Xmx2G}"
 
 # check if the server tree has been built or not (if it's an empty server, this will likely lack a server.properties file)
 {
-    if [ ! -r "${_mc_basedir}/server.properties"]; then
+    if [ ! -r "${_mc_basedir}/server.properties" ]; then
         echo -n "Building initial server layout: "
         cd "${_mc_basedir}"
 
