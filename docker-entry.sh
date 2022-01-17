@@ -43,11 +43,21 @@ _java_args="${JAVA_ARGUMENTS:--Xms2G -Xmx2G}"
             -a ! -name server.properties \
             -a ! -name logs \
             -a ! -name mods \
+            -a ! -name .fabric \
             -exec ln -s {} \;
 
         # build the remaining important paths (these may exist already)
-        mkdir -p logs mods
-        chown craftserver:craftserver logs mods
+        mkdir -p logs mods .fabric
+        chown craftserver:craftserver logs mods .fabric
+
+        # link in paths from .fabric subdir
+        (
+            cd .fabric
+            find /opt/fabric_server_assets/.fabric \
+                -mindepth 1 \
+                -maxdepth 1 \
+                -exec ln -s {} \;
+        )
 
         echo "done."
     fi
